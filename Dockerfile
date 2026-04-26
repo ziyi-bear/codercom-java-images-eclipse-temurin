@@ -24,3 +24,7 @@ RUN userdel -r ubuntu && \
 
 USER coder
 RUN pipx ensurepath # adds user's bin directory to PATH
+
+## coder plugin some require npm to install cli(ex gemini cli)
+# Download and install nvm:
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash
