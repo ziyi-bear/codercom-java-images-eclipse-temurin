@@ -1,5 +1,6 @@
 ARG JAVA_VERSION=21
-FROM eclipse-temurin:${JAVA_VERSION}-jdk-noble
+# Name the first stage 'base'
+FROM eclipse-temurin:${JAVA_VERSION}-jdk-noble AS base
 
 # The software-properties-common package has been removed from Debian 13 (Trixie), and it is unclear if it will be re-added in the future.
 RUN apt-get update -y && apt-get install -y gnupg wget nano apt-utils unzip bash-completion sudo lsb-release curl apt-transport-https ca-certificates
@@ -24,3 +25,16 @@ RUN userdel -r ubuntu && \
 
 USER coder
 RUN pipx ensurepath # adds user's bin directory to PATH
+
+# --- Dev Stage ---
+# Start a new stage called 'dev' using the 'base' stage as its starting point
+FROM base AS dev
+
+# Switch to root to install additional system-level dev tools
+USER root
+RUN apt-get update -y && apt-get install -y git jq htop
+
+# Switch back to the 'coder' user for development
+USER coder
+
+# Add any dev-specific setup here

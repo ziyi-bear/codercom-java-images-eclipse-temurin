@@ -18,6 +18,20 @@ if want latest, can pull from below
 * `docker pull ghcr.io/ziyi-bear/codercom-java-images-eclipse-temurin:main-21-jdk-noble`
 * `docker pull ghcr.io/ziyi-bear/codercom-java-images-eclipse-temurin:main-17-jdk-noble`
 
+## Building Locally
+
+This repository uses a multi-stage `Dockerfile`. You can target either the `base` (production-ready) image or the `dev` (development-ready) image.
+
+### Build the Base Image
+```bash
+docker build --target base -t codercom-java-base:latest .
+```
+
+### Build the Dev Image
+```bash
+docker build --target dev -t codercom-java-dev:latest .
+```
+
 ## why don't use DHI image?
 because it will always show error below when running user coder
 ```bash
